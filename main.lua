@@ -3,11 +3,6 @@ local Fox = require("fox")
 local Rabbit = require("rabbit")
 
 local world = {
-	creatureTypes = {
-		Clover,
-		Fox,
-		Rabbit,
-	},
 	creatures = {
 		clovers = {},
 		foxes = {},
