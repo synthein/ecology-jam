@@ -1,13 +1,16 @@
-local Rabbits = {}
+local Animal = require("animal")
 
-function Rabbits.draw()
+local Rabbit = {}
+setmetatable(Rabbit, {__index = Animal})
+
+function Rabbit.draw()
     love.graphics.setColor(.75, .75, .75)
     for i, rabbit in ipairs(world.creatures.rabbits) do
         love.graphics.circle("fill", rabbit[1], rabbit[2], 15)
     end
 end
 
-function Rabbits.update(dt)
+function Rabbit.update(dt)
     for i, rabbit in ipairs(world.creatures.rabbits) do
         local cloverTarget, cloverX, cloverY, cloverDistanceSq, cloverIndex
         for i, clover in ipairs(world.creatures.clovers) do
@@ -36,4 +39,4 @@ function Rabbits.update(dt)
     end
 end
 
-return Rabbits
+return Rabbit

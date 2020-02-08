@@ -1,9 +1,9 @@
-local Clovers = require("clovers")
-local Foxes = require("foxes")
-local Rabbits = require("rabbits")
+local Clover = require("clover")
+local Fox = require("fox")
+local Rabbit = require("rabbit")
 
 world = {
-	creatureTypes = {Clovers, Foxes, Rabbits},
+	creatureTypes = {Clover, Fox, Rabbit},
 	creatures = {
 		clovers = {},
 		foxes = {},
