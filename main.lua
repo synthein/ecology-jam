@@ -21,7 +21,9 @@ function love.load()
 	local rabbits = world.creatures.rabbits
 
 	clovers[#clovers + 1] = Clover.new(50, 50)
-	clovers[#clovers + 1] = Clover.new(600, 500)
+	clovers[#clovers + 1] = Clover.new(50, 550)
+	clovers[#clovers + 1] = Clover.new(750, 50)
+	clovers[#clovers + 1] = Clover.new(750, 550)
 	foxes[#foxes + 1] = Fox.new(50, 150)
 	rabbits[#rabbits + 1] = Rabbit.new(50, 100)
 end
@@ -42,9 +44,11 @@ function love.update(dt)
 		cloverCount = #clovers
 		--x*10(1-x/20)
 		-- n1 = no*r()
-		newClovers = - cloverCount * cloverCount / 2 + cloverCount * 10 - cloverCount
-		for i = 1, math.floor(newClovers) do
-			clovers[#clovers + 1] = Clover.new(50 * i, 50 * dayCount)
+		--x*1(1-x/100) -> -x^2/100 + x
+		--newClovers = - cloverCount * cloverCount / 100 + cloverCount
+		newClovers = math.ceil(cloverCount * (1 - cloverCount / 100))
+		for i = 1, newClovers do
+			clovers[#clovers + 1] = Clover.new(800 * math.random(), 600 * math.random())
 		end
 	end
 

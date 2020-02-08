@@ -13,7 +13,7 @@ end
 
 function Clover:draw()
     love.graphics.setColor(0, 0.8, 0)
-    love.graphics.circle("fill", self.x, self.y, 15)
+    love.graphics.circle("fill", self.x, self.y, 5)
 end
 
 return Clover
