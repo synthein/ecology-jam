@@ -3,11 +3,17 @@ local Creature = require("creature")
 local Clover = {}
 setmetatable(Clover, {__index = Creature})
 
-function Clover.draw()
+function Clover.new(x, y)
+    local c = Creature.new(x, y)
+
+    setmetatable(c, {__index = Clover})
+
+    return c
+end
+
+function Clover:draw()
     love.graphics.setColor(0, 0.8, 0)
-    for i, clover in ipairs(world.creatures.clovers) do
-        love.graphics.circle("fill", clover[1], clover[2], 15)
-    end
+    love.graphics.circle("fill", self.x, self.y, 15)
 end
 
 return Clover
