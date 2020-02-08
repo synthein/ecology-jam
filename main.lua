@@ -1,9 +1,13 @@
-local Clovers = require("clovers")
-local Foxes = require("foxes")
-local Rabbits = require("rabbits")
+local Clover = require("clover")
+local Fox = require("fox")
+local Rabbit = require("rabbit")
 
-world = {
-	creatureTypes = {Clovers, Foxes, Rabbits},
+local world = {
+	creatureTypes = {
+		Clover,
+		Fox,
+		Rabbit,
+	},
 	creatures = {
 		clovers = {},
 		foxes = {},
@@ -16,10 +20,10 @@ function love.load()
 	local foxes = world.creatures.foxes
 	local rabbits = world.creatures.rabbits
 
-	clovers[#clovers + 1] = {50, 50}
-	clovers[#clovers + 1] = {600, 500}
-	foxes[#foxes + 1] = {50, 150}
-	rabbits[#rabbits + 1] = {50, 100}
+	clovers[#clovers + 1] = Clover.new(50, 50)
+	clovers[#clovers + 1] = Clover.new(600, 500)
+	foxes[#foxes + 1] = Fox.new(50, 150)
+	rabbits[#rabbits + 1] = Rabbit.new(50, 100)
 end
 
 local dayTimer = 0
@@ -40,21 +44,22 @@ function love.update(dt)
 		-- n1 = no*r()
 		newClovers = - cloverCount * cloverCount / 2 + cloverCount * 10 - cloverCount
 		for i = 1, math.floor(newClovers) do
-			clovers[#clovers + 1] = {50 * i, 100 * dayCount}
+			clovers[#clovers + 1] = Clover.new(50 * i, 50 * dayCount)
 		end
 	end
 
-
-	for i, creatureType in ipairs(world.creatureTypes) do
-		if creatureType.update then
-			creatureType.update(dt)
+	for creatureType, creatures in pairs(world.creatures) do
+		for i, creature in ipairs(creatures) do
+			creature:update(dt, world)
 		end
 	end
 end
 
 function love.draw()
-	for i, creatureType in ipairs(world.creatureTypes) do
-		creatureType.draw()
+	for creatureType, creatures in pairs(world.creatures) do
+		for i, creature in ipairs(creatures) do
+			creature:draw()
+		end
 	end
 end
 
