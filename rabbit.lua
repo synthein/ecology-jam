@@ -34,7 +34,7 @@ function Rabbit:update(dt, world, NewDay)
 
     self:move(dt)
 
-    if lume.distance(self.x, self.y, self.target.x, self.target.y, "squared") < 100 then
+    if self.target and lume.distance(self.x, self.y, self.target.x, self.target.y, "squared") < 100 then
         self:eat(food)
     end
 end
