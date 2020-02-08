@@ -2,15 +2,23 @@ local Clovers = require("clovers")
 local Foxes = require("foxes")
 local Rabbits = require("rabbits")
 
-local WORLD_WIDTH = 500
-local WORLD_HEIGHT = 500
-
-local world = {
-	creatureTypes = {Clovers, Foxes, Rabbits}
+world = {
+	creatureTypes = {Clovers, Foxes, Rabbits},
+	creatures = {
+		clovers = {},
+		foxes = {},
+		rabbits = {},
+	},
 }
 
 function love.load()
-	love.window.setMode(WORLD_WIDTH, WORLD_HEIGHT)
+	local clovers = world.creatures.clovers
+	local foxes = world.creatures.foxes
+	local rabbits = world.creatures.rabbits
+
+	clovers[#clovers + 1] = {50, 50}
+	foxes[#foxes + 1] = {50, 150}
+	rabbits[#rabbits + 1] = {50, 100}
 end
 
 function love.update(dt)
