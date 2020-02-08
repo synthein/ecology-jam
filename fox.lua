@@ -5,7 +5,6 @@ setmetatable(Fox, {__index = Animal})
 
 function Fox.new(x, y)
     local f = Animal.new(x, y)
-
     setmetatable(f, {__index = Fox})
 
     return f

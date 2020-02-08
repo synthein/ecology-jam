@@ -1,40 +1,25 @@
 local Animal = require("animal")
+local Clover = require("clover")
+local lume = require("vendor/lume")
 
 local Rabbit = {}
 setmetatable(Rabbit, {__index = Animal})
 
 function Rabbit.new(x, y)
     local r = Animal.new(x, y)
-
     setmetatable(r, {__index = Rabbit})
 
     return r
 end
 
 function Rabbit:update(dt, world)
-    local cloverTarget, cloverX, cloverY, cloverDistanceSq, cloverIndex
-    for i, clover in ipairs(world.creatures.clovers) do
-        local x, y, distanceSq
-        x =  clover.x - self.x
-        y =  clover.y - self.y
-        distanceSq = x * x + y * y
-        if not cloverTarget or cloverDistanceSq > distanceSq then
-            cloverTarget = clover
-            cloverDistanceSq =distanceSq
-            cloverX = x
-            cloverY = y
-            cloverIndex = i
-        end
-    end
+    local food = world.creatures.clovers
 
-    if cloverTarget then
-        if cloverDistanceSq < 100 then
-            table.remove(world.creatures.clovers, cloverIndex)
-        else
-            local distance = math.sqrt(cloverDistanceSq)
-            self.x = self.x + dt * 50 * cloverX / distance
-            self.y = self.y + dt * 50 * cloverY / distance
-        end
+    self:setTarget(food)
+    self:move(dt)
+
+    if lume.distance(self.x, self.y, self.target.x, self.target.y, "squared") < 100 then
+        self:eat(food)
     end
 end
 

@@ -5,7 +5,6 @@ setmetatable(Clover, {__index = Creature})
 
 function Clover.new(x, y)
     local c = Creature.new(x, y)
-
     setmetatable(c, {__index = Clover})
 
     return c
