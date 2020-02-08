@@ -8,22 +8,24 @@ function Rabbits.draw()
     end
 end
 
-local clovers = {{50, 200}}
+local clovers = {{50, 50}}
 function Rabbits.update(dt)
     for i, rabbit in ipairs(rabbits) do
-        local cloverTarget, cloverDistanceSq
+        local cloverTarget, cloverX, cloverY, cloverDistanceSq
         for i, clover in ipairs(clovers) do
             local x, y, distanceSq
             x =  clover[1] - rabbit[1]
-            y =  clover[1] - rabbit[1]
+            y =  clover[2] - rabbit[2]
             distanceSq = x * x + y * y
             if not cloverTarget or cloverDistanceSq > distanceSq then
                 cloverTarget = clover
                 cloverDistanceSq =distanceSq
+                cloverX = x
+                cloverY = y
             end
         end
-        rabbit[1] = rabbit[1] + dt * 5 * cloverTarget[1]
-        rabbit[2] = rabbit[2] + dt * 5 * cloverTarget[2]
+        rabbit[1] = rabbit[1] + dt * 5 * cloverX
+        rabbit[2] = rabbit[2] + dt * 5 * cloverY
     end
 end
 
