@@ -16,6 +16,8 @@ function Animal.new(x, y)
 end
 
 function Animal:setTarget(targetPool)
+    self.target = nil
+
     for i, target in ipairs(targetPool) do
         local distanceSq = lume.distance(
             self.x, self.y,
