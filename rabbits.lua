@@ -9,7 +9,7 @@ end
 
 function Rabbits.update(dt)
     for i, rabbit in ipairs(world.creatures.rabbits) do
-        local cloverTarget, cloverX, cloverY, cloverDistanceSq
+        local cloverTarget, cloverX, cloverY, cloverDistanceSq, cloverIndex
         for i, clover in ipairs(world.creatures.clovers) do
             local x, y, distanceSq
             x =  clover[1] - rabbit[1]
@@ -20,11 +20,19 @@ function Rabbits.update(dt)
                 cloverDistanceSq =distanceSq
                 cloverX = x
                 cloverY = y
+                cloverIndex = i
             end
         end
-        local distance = math.sqrt(cloverDistanceSq)
-        rabbit[1] = rabbit[1] + dt * 50 * cloverX / distance
-        rabbit[2] = rabbit[2] + dt * 50 * cloverY / distance
+
+        if cloverTarget then
+            if cloverDistanceSq < 100 then
+                table.remove(world.creatures.clovers, cloverIndex)
+            else
+                local distance = math.sqrt(cloverDistanceSq)
+                rabbit[1] = rabbit[1] + dt * 50 * cloverX / distance
+                rabbit[2] = rabbit[2] + dt * 50 * cloverY / distance
+            end
+        end
     end
 end
 
