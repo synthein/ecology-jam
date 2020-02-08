@@ -24,8 +24,9 @@ function Rabbits.update(dt)
                 cloverY = y
             end
         end
-        rabbit[1] = rabbit[1] + dt * 5 * cloverX
-        rabbit[2] = rabbit[2] + dt * 5 * cloverY
+        local distance = math.sqrt(cloverDistanceSq)
+        rabbit[1] = rabbit[1] + dt * 50 * cloverX / distance
+        rabbit[2] = rabbit[2] + dt * 50 * cloverY / distance
     end
 end
 
