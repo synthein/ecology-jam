@@ -9,13 +9,29 @@ function Rabbit.new(x, y)
     local r = Animal.new(x, y)
     setmetatable(r, {__index = Rabbit})
 
+    r.fill = 0
+
     return r
 end
 
-function Rabbit:update(dt, world)
+function Rabbit:update(dt, world, NewDay)
+    if newDay then
+        if self.fill == 2 then
+            table.insert(world.creatures.rabbits, Rabbit.new(self.x, self.y))
+            self.fill = 0
+        elseif self.fill == 1 then
+            self.fill = 0
+        else
+            lume.remove(world.creatures.rabbits, self)
+        end
+    end
+
     local food = world.creatures.clovers
 
-    self:setTarget(food)
+    if self.fill < 2 then
+        self:setTarget(food)
+    end
+
     self:move(dt)
 
     if lume.distance(self.x, self.y, self.target.x, self.target.y, "squared") < 100 then
