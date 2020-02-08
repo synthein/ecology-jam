@@ -9,7 +9,7 @@ function Rabbit.new(x, y)
     local r = Animal.new(x, y)
     setmetatable(r, {__index = Rabbit})
 
-    r.fill = 1
+    r.fill = 0
 
     return r
 end
@@ -17,7 +17,7 @@ end
 function Rabbit:update(dt, world, newDay)
     if newDay then
         if self.fill == 2 then
-            table.insert(world.creatures.rabbits, Rabbit.new(self.x + 30, self.y))
+            table.insert(world.new.rabbits, {self.x + 30, self.y})
             self.fill = 0
         elseif self.fill == 1 then
             self.fill = 0

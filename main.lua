@@ -8,6 +8,9 @@ local world = {
 		foxes = {},
 		rabbits = {},
 	},
+	new = {
+		rabbits = {}
+	}
 }
 
 function love.load()
@@ -51,6 +54,12 @@ function love.update(dt)
 		for i, creature in ipairs(creatures) do
 			creature:update(dt, world, newDay)
 		end
+	end
+
+	while #world.new.rabbits ~= 0 do
+		local list = world.new.rabbits[1]
+		table.insert(world.creatures.rabbits, Rabbit.new(list[1], list[2]))
+		table.remove(world.new.rabbits, 1)
 	end
 end
 
