@@ -14,7 +14,7 @@ end
 function Fox:update(dt, world)
     local food = world.creatures.rabbits
 
-    self:setTarget(food)
+    self:lookForFood(food)
     self:move(dt)
 
     if self.target and lume.distance(self.x, self.y, self.target.x, self.target.y, "squared") < 100 then

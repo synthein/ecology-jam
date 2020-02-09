@@ -30,8 +30,10 @@ function Rabbit:update(dt, world, newDay)
     local food = world.creatures.clovers
 
     if self.fill < 2 then
-        self:setTarget(food)
+        self:lookForFood(food)
     end
+
+    self:watchForPredators(world.creatures.foxes)
 
     self:move(dt)
 

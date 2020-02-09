@@ -22,8 +22,8 @@ function love.load()
 	clovers[#clovers + 1] = Clover.new(50, 550)
 	clovers[#clovers + 1] = Clover.new(750, 50)
 	clovers[#clovers + 1] = Clover.new(750, 550)
-	--foxes[#foxes + 1] = Fox.new(50, 150)
 	rabbits[#rabbits + 1] = Rabbit.new(50, 100)
+	foxes[#foxes + 1] = Fox.new(200, 300)
 end
 
 local dayTimer = 0
