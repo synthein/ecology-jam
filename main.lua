@@ -12,13 +12,18 @@ local world = {
 		rabbits = {},
 	},
 	new = {
+		clovers = {},
 		foxes = {},
 		rabbits = {}
 	}
 }
 
 function love.load()
-	table.insert(world.creatures.clovers, Clover.new(400, 300))
+	table.insert(world.new.clovers, {400, 300})
+	for i = 0, 6 do
+		Clover.seed(#world.new.clovers, world.new.clovers)
+	end
+	table.insert(world.new.rabbits, {400,300})
 end
 
 local dayTimer = 0
@@ -31,8 +36,6 @@ function love.update(dt)
 		dayTimer = dayTimer - 10
 		dayCount = dayCount + 1
 		if dayCount == 3 then
-			table.insert(world.new.rabbits, {400,300})
-		elseif dayCount == 5 then
 			table.insert(world.new.foxes, {400,300})
 		end
 	end
@@ -44,16 +47,14 @@ function love.update(dt)
 	end
 
 	if newDay then
-		local clovers = world.creatures.clovers
-		cloverCount = #clovers
-		--x*10(1-x/20)
-		-- n1 = no*r()
-		--x*1(1-x/100) -> -x^2/100 + x
-		--newClovers = - cloverCount * cloverCount / 100 + cloverCount
-		newClovers = math.ceil(cloverCount * (1 - cloverCount / 100))
-		for i = 1, newClovers do
-			clovers[#clovers + 1] = Clover.new(800 * math.random(), 600 * math.random())
-		end
+		Clover.seed(#world.creatures.clovers, world.new.clovers)
+	end
+
+
+	while #world.new.clovers ~= 0 do
+		local list = world.new.clovers[1]
+		table.insert(world.creatures.clovers, Clover.new(list[1], list[2]))
+		table.remove(world.new.clovers, 1)
 	end
 
 	while #world.new.rabbits ~= 0 do

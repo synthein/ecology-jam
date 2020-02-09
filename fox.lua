@@ -8,7 +8,7 @@ function Fox.new(x, y)
     local f = Animal.new(x, y)
     setmetatable(f, {__index = Fox})
 
-    f.speed = 60
+    f.speed = 75
 
     return f
 end
@@ -16,10 +16,11 @@ end
 function Fox:update(dt, world, newDay)
     if newDay then
         if self.fill == 4 then
-            table.insert(world.new.foxes, {self.x + 30, self.y})
-        elseif self.fill >=2 then
             self.fill = self.fill - 2
-        else
+            table.insert(world.new.foxes, {self.x + 30, self.y})
+        end
+        self.fill = self.fill - 2
+        if self.fill < 0 then
             lume.remove(world.creatures.foxes, self)
             return
         end

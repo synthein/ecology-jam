@@ -15,4 +15,18 @@ function Clover:draw()
     love.graphics.circle("fill", self.x, self.y, 5)
 end
 
+function Clover.seed(cloverCount, clovers)
+    --x*10(1-x/20)
+    -- n1 = no*r()
+    --x*1(1-x/100) -> -x^2/100 + x
+    --newClovers = - cloverCount * cloverCount / 100 + cloverCount
+    newClovers = math.ceil(cloverCount * (1 - cloverCount / 100))
+    for i = 1, newClovers do
+        table.insert(
+            clovers,
+            {800 * math.random(), 600 * math.random()}
+        )
+    end
+end
+
 return Clover
