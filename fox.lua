@@ -8,6 +8,8 @@ function Fox.new(x, y)
     local f = Animal.new(x, y)
     setmetatable(f, {__index = Fox})
 
+    f.speed = 60
+
     return f
 end
 

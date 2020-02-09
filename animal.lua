@@ -88,8 +88,8 @@ function Animal:move(dt, maxX, maxY)
     end
 
     if distance ~= 0 then
-        self.x = self.x + runDirection * dt * 50 * dx / distance
-        self.y = self.y + runDirection * dt * 50 * dy / distance
+        self.x = self.x + runDirection * dt * self.speed * dx / distance
+        self.y = self.y + runDirection * dt * self.speed * dy / distance
 
         self.x = lume.clamp(self.x, 0, maxX)
         self.y = lume.clamp(self.y, 0, maxY)

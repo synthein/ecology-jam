@@ -9,6 +9,8 @@ function Rabbit.new(x, y)
     local r = Animal.new(x, y)
     setmetatable(r, {__index = Rabbit})
 
+    r.speed = 50
+
     return r
 end
 
