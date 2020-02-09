@@ -12,23 +12,13 @@ local world = {
 		rabbits = {},
 	},
 	new = {
+		foxes = {},
 		rabbits = {}
 	}
 }
 
 function love.load()
-	lume.push(world.creatures.clovers,
-		Clover.new(50, 50),
-		Clover.new(50, 550),
-		Clover.new(750, 50),
-		Clover.new(750, 550)
-	)
-	lume.push(world.creatures.rabbits,
-		Rabbit.new(50, 100)
-	)
-	lume.push(world.creatures.foxes,
-		Fox.new(200, 300)
-	)
+	table.insert(world.creatures.clovers, Clover.new(400, 300))
 end
 
 local dayTimer = 0
@@ -40,6 +30,18 @@ function love.update(dt)
 		newDay = true
 		dayTimer = dayTimer - 10
 		dayCount = dayCount + 1
+		if dayCount == 3 then
+			table.insert(world.new.rabbits, {400,300})
+		elseif dayCount == 5 then
+			table.insert(world.new.foxes, {400,300})
+		end
+	end
+
+	if newDay then print("newDay") end
+	for creatureType, creatures in pairs(world.creatures) do
+		for i, creature in ipairs(creatures) do
+			creature:update(dt, world, newDay)
+		end
 	end
 
 	if newDay then
@@ -55,22 +57,23 @@ function love.update(dt)
 		end
 	end
 
-	for creatureType, creatures in pairs(world.creatures) do
-		for i, creature in ipairs(creatures) do
-			creature:update(dt, world, newDay)
-		end
-	end
-
 	while #world.new.rabbits ~= 0 do
 		local list = world.new.rabbits[1]
 		table.insert(world.creatures.rabbits, Rabbit.new(list[1], list[2]))
 		table.remove(world.new.rabbits, 1)
+	end
+
+	while #world.new.foxes ~= 0 do
+		local list = world.new.foxes[1]
+		table.insert(world.creatures.foxes, Fox.new(list[1], list[2]))
+		table.remove(world.new.foxes, 1)
 	end
 end
 
 function love.draw()
 	for creatureType, creatures in pairs(world.creatures) do
 		for i, creature in ipairs(creatures) do
+
 			creature:draw()
 		end
 	end

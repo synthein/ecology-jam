@@ -23,6 +23,7 @@ function Rabbit:update(dt, world, newDay)
             self.fill = 0
         else
             lume.remove(world.creatures.rabbits, self)
+            print("rabit died")
             return
         end
     end
@@ -44,6 +45,7 @@ function Rabbit:update(dt, world, newDay)
 end
 
 function Rabbit:draw()
+    print("rabbit draw", self.x, self.y)
     love.graphics.setColor(.75, .75, .75)
     love.graphics.circle("fill", self.x, self.y, 15)
 end
