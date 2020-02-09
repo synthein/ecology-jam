@@ -1,6 +1,7 @@
 local Clover = require("clover")
 local Fox = require("fox")
 local Rabbit = require("rabbit")
+local lume = require("vendor/lume")
 
 local world = {
 	maxX = 800,
@@ -16,16 +17,18 @@ local world = {
 }
 
 function love.load()
-	local clovers = world.creatures.clovers
-	local foxes = world.creatures.foxes
-	local rabbits = world.creatures.rabbits
-
-	clovers[#clovers + 1] = Clover.new(50, 50)
-	clovers[#clovers + 1] = Clover.new(50, 550)
-	clovers[#clovers + 1] = Clover.new(750, 50)
-	clovers[#clovers + 1] = Clover.new(750, 550)
-	rabbits[#rabbits + 1] = Rabbit.new(50, 100)
-	foxes[#foxes + 1] = Fox.new(200, 300)
+	lume.push(world.creatures.clovers,
+		Clover.new(50, 50),
+		Clover.new(50, 550),
+		Clover.new(750, 50),
+		Clover.new(750, 550)
+	)
+	lume.push(world.creatures.rabbits,
+		Rabbit.new(50, 100)
+	)
+	lume.push(world.creatures.foxes,
+		Fox.new(200, 300)
+	)
 end
 
 local dayTimer = 0
