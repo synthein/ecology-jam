@@ -9,8 +9,6 @@ function Rabbit.new(x, y)
     local r = Animal.new(x, y)
     setmetatable(r, {__index = Rabbit})
 
-    r.fill = 0
-
     return r
 end
 
@@ -23,7 +21,6 @@ function Rabbit:update(dt, world, newDay)
             self.fill = 0
         else
             lume.remove(world.creatures.rabbits, self)
-            print("rabit died")
             return
         end
     end
@@ -40,14 +37,12 @@ function Rabbit:update(dt, world, newDay)
 
     if self.target and lume.distance(self.x, self.y, self.target.x, self.target.y, "squared") < 100 then
         self:eat(food)
-        self.fill = self.fill + 1
     end
 end
 
 function Rabbit:draw()
-    print("rabbit draw", self.x, self.y)
     love.graphics.setColor(.75, .75, .75)
-    love.graphics.circle("fill", self.x, self.y, 15)
+    love.graphics.circle("fill", self.x, self.y, 10)
 end
 
 return Rabbit

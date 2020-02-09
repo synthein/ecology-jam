@@ -16,6 +16,8 @@ function Animal.new(x, y)
     a.targetIndex = nil
     a.targetDistanceSq = nil
 
+    a.fill = 0
+
     return a
 end
 
@@ -99,6 +101,8 @@ function Animal:eat(foodPool)
     self.target = nil
     self.targetIndex = nil
     self.targetDistanceSq = nil
+
+    self.fill = self.fill + 1
 end
 
 return Animal

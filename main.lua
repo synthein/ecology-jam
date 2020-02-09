@@ -37,7 +37,6 @@ function love.update(dt)
 		end
 	end
 
-	if newDay then print("newDay") end
 	for creatureType, creatures in pairs(world.creatures) do
 		for i, creature in ipairs(creatures) do
 			creature:update(dt, world, newDay)
