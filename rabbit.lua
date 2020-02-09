@@ -35,7 +35,7 @@ function Rabbit:update(dt, world, newDay)
 
     self:watchForPredators(world.creatures.foxes)
 
-    self:move(dt)
+    self:move(dt, world.maxX, world.maxY)
 
     if self.target and lume.distance(self.x, self.y, self.target.x, self.target.y, "squared") < 100 then
         self:eat(food)

@@ -55,7 +55,7 @@ function Animal:watchForPredators(predatorPool)
     end
 end
 
-function Animal:move(dt)
+function Animal:move(dt, maxX, maxY)
     local targetDx, targetDy, targetDistance = 0, 0, math.huge
     local predatorDx, predatorDy, predatorDistance = 0, 0, math.huge
 
@@ -87,6 +87,9 @@ function Animal:move(dt)
 
     self.x = self.x + runDirection * dt * 50 * dx / distance
     self.y = self.y + runDirection * dt * 50 * dy / distance
+
+    self.x = lume.clamp(self.x, 0, maxX)
+    self.y = lume.clamp(self.y, 0, maxY)
 end
 
 function Animal:eat(foodPool)

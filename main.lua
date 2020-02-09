@@ -3,6 +3,8 @@ local Fox = require("fox")
 local Rabbit = require("rabbit")
 
 local world = {
+	maxX = 800,
+	maxY = 600,
 	creatures = {
 		clovers = {},
 		foxes = {},
