@@ -21,7 +21,11 @@ local world = {
 function love.load()
 	table.insert(world.new.clovers, {400, 300})
 	for i = 0, 6 do
-		Clover.seed(#world.new.clovers, world.new.clovers)
+		Clover.seed(
+			#world.new.clovers,
+			world.new.clovers,
+			world.maxX, world.maxY
+		)
 	end
 	table.insert(world.new.rabbits, {400,300})
 end
@@ -47,7 +51,11 @@ function love.update(dt)
 	end
 
 	if newDay then
-		Clover.seed(#world.creatures.clovers, world.new.clovers)
+		Clover.seed(
+			#world.creatures.clovers,
+			world.new.clovers,
+			world.maxX, world.maxY
+		)
 	end
 
 
