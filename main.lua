@@ -19,17 +19,21 @@ local world = {
 }
 
 function love.load()
-	table.insert(world.new.clovers, {400, 300})
-	for i = 0, 6 do
-		Clover.seed(
-			#world.new.clovers,
-			world.new.clovers,
-			world.maxX, world.maxY
-		)
-	end
-
 	love.handlers["new rabbit"] = function(...)
 		table.insert(world.creatures.rabbits, Rabbit.new(unpack(...)))
+	end
+
+	love.handlers["new clover"] = function(...)
+		table.insert(world.creatures.clovers, Clover.new(unpack(...)))
+	end
+
+	love.handlers["new fox"] = function(...)
+		table.insert(world.creatures.foxes, Fox.new(unpack(...)))
+	end
+
+	love.event.push("new clover", {400, 300})
+	for i = 1, 7 do
+		Clover.seed(i, world.maxX, world.maxY)
 	end
 
 	love.event.push("new rabbit", {400, 300})
@@ -45,7 +49,7 @@ function love.update(dt)
 		dayTimer = dayTimer - 10
 		dayCount = dayCount + 1
 		if dayCount == 3 then
-			table.insert(world.new.foxes, {400,300})
+			love.event.push("new fox", {400,300})
 		end
 	end
 
@@ -58,22 +62,8 @@ function love.update(dt)
 	if newDay then
 		Clover.seed(
 			#world.creatures.clovers,
-			world.new.clovers,
 			world.maxX, world.maxY
 		)
-	end
-
-
-	while #world.new.clovers ~= 0 do
-		local list = world.new.clovers[1]
-		table.insert(world.creatures.clovers, Clover.new(list[1], list[2]))
-		table.remove(world.new.clovers, 1)
-	end
-
-	while #world.new.foxes ~= 0 do
-		local list = world.new.foxes[1]
-		table.insert(world.creatures.foxes, Fox.new(list[1], list[2]))
-		table.remove(world.new.foxes, 1)
 	end
 end
 
