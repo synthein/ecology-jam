@@ -62,6 +62,25 @@ function Animal:lookForShelter(shelterPool)
     end
 end
 
+function Animal:lookForMate(matingPool)
+    self.mate = nil
+
+    for i, mate in ipairs(matingPool) do
+        if mate ~= self and not similar.hidden and mate.gender ~= self.gender then
+            local distanceSq = lume.distance(
+                self.x, self.y,
+                mate.x, mate.y,
+                "squared"
+            )
+
+            if not self.mate or self.mateDistanceSq > distanceSq then
+                self.mate = similar
+                self.mateDistanceSq = distanceSq
+            end
+        end
+    end
+end
+
 function Animal:watchForSimilar(similarPool)
     self.similar = nil
 
@@ -104,6 +123,7 @@ end
 function Animal:move(dt, maxX, maxY)
     local targetDx, targetDy, targetDistance = 0, 0, math.huge
     local shelterDx, shelterDy, shelterDistance = 0, 0, math.huge
+    local mateDx, mateDy, mateDistance = 0, 0, math.huge
     local similarDx, similarDy, similarDistance = 0, 0, math.huge
     local predatorDx, predatorDy, predatorDistance = 0, 0, math.huge
 
@@ -116,6 +136,11 @@ function Animal:move(dt, maxX, maxY)
         shelterDx = self.shelter.x - self.x
         shelterDy = self.shelter.y - self.y
         shelterDistance = math.sqrt(shelterDx * shelterDx + shelterDy * shelterDy)
+    end
+    if self.mate then
+        mateDx = self.mate.x - self.x
+        mateDy = self.mate.y - self.y
+        mateDistance = math.sqrt(mateDx * mateDx + mateDy * mateDy)
     end
     if self.similar then
         similarDx = self.similar.x - self.x
