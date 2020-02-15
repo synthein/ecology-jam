@@ -22,18 +22,6 @@ local world = {
 }
 
 function love.load()
-	love.handlers["new rabbit"] = function(...)
-		table.insert(world.creatures.rabbits, Rabbit.new(unpack(...)))
-	end
-
-	love.handlers["new clover"] = function(...)
-		table.insert(world.creatures.clovers, Clover.new(unpack(...)))
-	end
-
-	love.handlers["new fox"] = function(...)
-		table.insert(world.creatures.foxes, Fox.new(unpack(...)))
-	end
-
 	love.event.push("new clover", {400, 300})
 	for i = 1, 7 do
 		Clover.seed(i, world.maxX, world.maxY)
@@ -91,4 +79,16 @@ function love.keypressed(key)
 	if key == "escape" then
 		love.event.quit()
 	end
+end
+
+love.handlers["new rabbit"] = function(...)
+    table.insert(world.creatures.rabbits, Rabbit.new(unpack(...)))
+end
+
+love.handlers["new clover"] = function(...)
+    table.insert(world.creatures.clovers, Clover.new(unpack(...)))
+end
+
+love.handlers["new fox"] = function(...)
+    table.insert(world.creatures.foxes, Fox.new(unpack(...)))
 end
