@@ -55,6 +55,13 @@ function Rabbit:draw()
     if not self.hidden then
         love.graphics.setColor(.75, .75, .75)
         love.graphics.circle("fill", self.x, self.y, 10)
+        love.graphics.setColor(0, 0, 0)
+        -- text, x, y, r, sx, sy, ox, oy, kx, ky
+        if self.gender == "male" then
+            love.graphics.print("M", self.x, self.y, 0, 1, 1, 5, 7 )
+        else
+            love.graphics.print("F", self.x, self.y, 0, 1, 1, 5, 7 )
+        end
     end
 end
 

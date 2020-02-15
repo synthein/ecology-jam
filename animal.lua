@@ -18,6 +18,11 @@ function Animal.new(x, y)
 
     a.fill = 0
 
+    a.gender = "male"
+    if math.random() >= .5 then
+        a.gender = "female"
+    end
+
     return a
 end
 
