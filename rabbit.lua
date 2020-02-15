@@ -18,7 +18,7 @@ end
 function Rabbit:update(dt, world, newDay)
     if newDay then
         if self.fill == 2 then
-            table.insert(world.new.rabbits, {self.x + 30, self.y})
+            love.event.push("new rabbit", {self.x + 30, self.y})
             self.fill = 0
         elseif self.fill == 1 then
             self.fill = 0
