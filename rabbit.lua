@@ -35,6 +35,7 @@ function Rabbit:update(dt, world, newDay)
         self:lookForFood(food)
     end
 
+    self:lookForShelter(world.creatures.holes)
     self:watchForSimilar(world.creatures.rabbits)
     self:watchForPredators(world.creatures.foxes)
 

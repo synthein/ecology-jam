@@ -39,6 +39,22 @@ function Animal:lookForFood(foodPool)
     end
 end
 
+function Animal:lookForShelter(shelterPool)
+    self.shelter = nil
+    for i, shelter in ipairs(shelterPool) do
+        local distanceSq = lume.distance(
+            self.x, self.y,
+            shelter.x, shelter.y,
+            "squared"
+        )
+
+        if not self.shelter or self.shelterDistanceSq > distanceSq then
+            self.shelter = shelter
+            self.shelterDistanceSq = distanceSq
+        end
+    end
+end
+
 function Animal:watchForSimilar(similarPool)
         self.similar = nil
 
@@ -78,6 +94,7 @@ end
 
 function Animal:move(dt, maxX, maxY)
     local targetDx, targetDy, targetDistance = 0, 0, math.huge
+    local shelterDx, shelterDy, shelterDistance = 0, 0, math.huge
     local similarDx, similarDy, similarDistance = 0, 0, math.huge
     local predatorDx, predatorDy, predatorDistance = 0, 0, math.huge
 
@@ -85,6 +102,11 @@ function Animal:move(dt, maxX, maxY)
         targetDx = self.target.x - self.x
         targetDy = self.target.y - self.y
         targetDistance = math.sqrt(targetDx * targetDx + targetDy * targetDy)
+    end
+    if self.shelter then
+        shelterDx = self.shelter.x - self.x
+        shelterDy = self.shelter.y - self.y
+        shelterDistance = math.sqrt(shelterDx * shelterDx + shelterDy * shelterDy)
     end
     if self.similar then
         similarDx = self.similar.x - self.x
@@ -110,6 +132,11 @@ function Animal:move(dt, maxX, maxY)
         dx = targetDx
         dy = targetDy
         distance = targetDistance
+    elseif shelterDistance < predatorDistance then
+        runDirection = 1
+        dx = shelterDx
+        dy = shelterDy
+        distance = shelterDistance
     else
         runDirection = -1
         dx = predatorDx
