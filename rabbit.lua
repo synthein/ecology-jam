@@ -10,6 +10,7 @@ function Rabbit.new(x, y)
     setmetatable(r, {__index = Rabbit})
 
     r.speed = 50
+    r.spacing = 20
 
     return r
 end
@@ -33,6 +34,7 @@ function Rabbit:update(dt, world, newDay)
         self:lookForFood(food)
     end
 
+    self:watchForSimilar(world.creatures.rabbits)
     self:watchForPredators(world.creatures.foxes)
 
     self:move(dt, world.maxX, world.maxY)

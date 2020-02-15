@@ -9,6 +9,7 @@ function Fox.new(x, y)
     setmetatable(f, {__index = Fox})
 
     f.speed = 75
+    f.spacing = 50
 
     return f
 end
@@ -33,6 +34,7 @@ function Fox:update(dt, world, newDay)
         self:lookForFood(food)
     end
 
+    self:watchForSimilar(world.creatures.foxes)
     self:move(dt, world.maxX, world.maxY)
 
     if self.target and lume.distance(self.x, self.y, self.target.x, self.target.y, "squared") < 100 then
