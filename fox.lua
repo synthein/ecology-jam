@@ -17,10 +17,10 @@ end
 function Fox:update(dt, world, newDay)
     if newDay then
         if self.fill == 4 then
-            self.fill = self.fill - 2
+            self.fill = self.fill - 3
             table.insert(world.new.foxes, {self.x + 30, self.y})
         end
-        self.fill = self.fill - 2
+        self.fill = self.fill - 1
         if self.fill < 0 then
             lume.remove(world.creatures.foxes, self)
             return

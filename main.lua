@@ -77,10 +77,15 @@ function love.update(dt)
 	end
 end
 
-function love.draw()
-	for creatureType, creatures in pairs(world.creatures) do
-		for i, creature in ipairs(creatures) do
+local drawOrder = {
+	"clovers",
+	"rabbits",
+	"foxes"
+}
 
+function love.draw()
+	for _, creatureType in ipairs(drawOrder) do
+		for i, creature in ipairs(world.creatures[creatureType]) do
 			creature:draw()
 		end
 	end

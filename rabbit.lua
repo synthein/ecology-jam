@@ -17,12 +17,13 @@ end
 
 function Rabbit:update(dt, world, newDay)
     if newDay then
-        if self.fill == 2 then
+        if self.fill == 3 then
             love.event.push("new rabbit", {self.x + 30, self.y})
-            self.fill = 0
-        elseif self.fill == 1 then
-            self.fill = 0
-        else
+            self.fill = self.fill - 2
+        end
+        self.fill = self.fill - 1
+
+        if self.fill < 0 then
             lume.remove(world.creatures.rabbits, self)
             return
         end
@@ -30,7 +31,7 @@ function Rabbit:update(dt, world, newDay)
 
     local food = world.creatures.clovers
 
-    if self.fill < 2 then
+    if self.fill < 3 then
         self:lookForFood(food)
     end
 
