@@ -4,6 +4,8 @@ local lume = require("vendor/lume")
 local Animal = {}
 setmetatable(Animal, {__index = Creature})
 
+Animal.visionDistance = math.huge
+
 function Animal.new(x, y)
     local a = Creature.new(x, y)
     setmetatable(a, {__index = Animal})
@@ -27,6 +29,7 @@ function Animal.new(x, y)
 end
 
 function Animal:lookForFood(foodPool)
+    local visionSq = self.visionDistance * self.visionDistance
     self.target = nil
 
     for i, food in ipairs(foodPool) do
@@ -37,7 +40,7 @@ function Animal:lookForFood(foodPool)
                 "squared"
             )
 
-            if not self.target or self.targetDistanceSq > distanceSq then
+            if distanceSq <= visionSq and (not self.target or self.targetDistanceSq > distanceSq) then
                 self.target = food
                 self.targetIndex = i
                 self.targetDistanceSq = distanceSq
@@ -47,7 +50,9 @@ function Animal:lookForFood(foodPool)
 end
 
 function Animal:lookForShelter(shelterPool)
+    local visionSq = self.visionDistance * self.visionDistance
     self.shelter = nil
+
     for i, shelter in ipairs(shelterPool) do
         local distanceSq = lume.distance(
             self.x, self.y,
@@ -55,7 +60,7 @@ function Animal:lookForShelter(shelterPool)
             "squared"
         )
 
-        if not self.shelter or self.shelterDistanceSq > distanceSq then
+        if distanceSq <= visionSq and (not self.shelter or self.shelterDistanceSq > distanceSq) then
             self.shelter = shelter
             self.shelterDistanceSq = distanceSq
         end
@@ -82,17 +87,18 @@ function Animal:lookForMate(matingPool)
 end
 
 function Animal:watchForSimilar(similarPool)
+    local visionSq = self.visionDistance * self.visionDistance
     self.similar = nil
 
     for i, similar in ipairs(similarPool) do
         if similar ~= self and not similar.hidden then
             local distanceSq = lume.distance(
-                self.x, self.y,
-                similar.x, similar.y,
-                "squared"
+            self.x, self.y,
+            similar.x, similar.y,
+            "squared"
             )
 
-            if not self.similar or self.similarDistanceSq > distanceSq then
+            if distanceSq <= visionSq and (not self.similar or self.similarDistanceSq > distanceSq) then
                 self.similar = similar
                 self.similarDistanceSq = distanceSq
             end
@@ -101,6 +107,7 @@ function Animal:watchForSimilar(similarPool)
 end
 
 function Animal:watchForPredators(predatorPool)
+    local visionSq = self.visionDistance * self.visionDistance
     self.predator = nil
 
     for i, predator in ipairs(predatorPool) do
@@ -111,7 +118,7 @@ function Animal:watchForPredators(predatorPool)
                 "squared"
             )
 
-            if not self.predator or self.targetDistanceSq > distanceSq then
+            if distanceSq <= visionSq and (not self.predator or self.targetDistanceSq > distanceSq) then
                 self.predator = predator
                 self.predatorIndex = i
                 self.targetDistanceSq = distanceSq

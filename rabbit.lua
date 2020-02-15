@@ -5,12 +5,13 @@ local lume = require("vendor/lume")
 local Rabbit = {}
 setmetatable(Rabbit, {__index = Animal})
 
+Rabbit.speed = 50
+Rabbit.spacing = 20
+Rabbit.visionDistance = 200
+
 function Rabbit.new(x, y)
     local r = Animal.new(x, y)
     setmetatable(r, {__index = Rabbit})
-
-    r.speed = 50
-    r.spacing = 20
 
     return r
 end

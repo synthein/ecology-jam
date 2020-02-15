@@ -4,12 +4,13 @@ local lume = require("vendor/lume")
 local Fox = {}
 setmetatable(Fox, {__index = Animal})
 
+Fox.speed = 75
+Fox.spacing = 50
+Fox.visionDistance = 300
+
 function Fox.new(x, y)
     local f = Animal.new(x, y)
     setmetatable(f, {__index = Fox})
-
-    f.speed = 75
-    f.spacing = 50
 
     return f
 end
