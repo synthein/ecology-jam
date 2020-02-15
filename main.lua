@@ -12,12 +12,6 @@ local world = {
 		foxes = {},
 		rabbits = {},
 		holes = {},
-	},
-	new = {
-		clovers = {},
-		foxes = {},
-		rabbits = {},
-		holes = {},
 	}
 }
 
