@@ -68,6 +68,7 @@ function Animal:lookForShelter(shelterPool)
 end
 
 function Animal:lookForMate(matingPool)
+    local visionSq = self.visionDistance * self.visionDistance
     self.mate = nil
 
     for i, mate in ipairs(matingPool) do
@@ -78,7 +79,7 @@ function Animal:lookForMate(matingPool)
                 "squared"
             )
 
-            if not self.mate or self.mateDistanceSq > distanceSq then
+            if distanceSq <= visionSq and (not self.mate or self.mateDistanceSq > distanceSq then
                 self.mate = similar
                 self.mateDistanceSq = distanceSq
             end
