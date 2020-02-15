@@ -27,7 +27,12 @@ function love.load()
 			world.maxX, world.maxY
 		)
 	end
-	table.insert(world.new.rabbits, {400,300})
+
+	love.handlers["new rabbit"] = function(...)
+		table.insert(world.creatures.rabbits, Rabbit.new(unpack(...)))
+	end
+
+	love.event.push("new rabbit", {400, 300})
 end
 
 local dayTimer = 0
@@ -63,12 +68,6 @@ function love.update(dt)
 		local list = world.new.clovers[1]
 		table.insert(world.creatures.clovers, Clover.new(list[1], list[2]))
 		table.remove(world.new.clovers, 1)
-	end
-
-	while #world.new.rabbits ~= 0 do
-		local list = world.new.rabbits[1]
-		table.insert(world.creatures.rabbits, Rabbit.new(list[1], list[2]))
-		table.remove(world.new.rabbits, 1)
 	end
 
 	while #world.new.foxes ~= 0 do
