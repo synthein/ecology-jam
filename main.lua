@@ -1,6 +1,7 @@
 local Clover = require("clover")
 local Fox = require("fox")
 local Rabbit = require("rabbit")
+local Hole = require("hole")
 local lume = require("vendor/lume")
 
 local world = {
@@ -10,11 +11,13 @@ local world = {
 		clovers = {},
 		foxes = {},
 		rabbits = {},
+		holes = {},
 	},
 	new = {
 		clovers = {},
 		foxes = {},
-		rabbits = {}
+		rabbits = {},
+		holes = {},
 	}
 }
 
@@ -33,6 +36,8 @@ function love.load()
 	end
 
 	love.event.push("new rabbit", {400, 300})
+
+	table.insert(world.creatures.holes, Hole.new(200, 300))
 end
 
 local dayTimer = 0
@@ -78,6 +83,7 @@ function love.update(dt)
 end
 
 local drawOrder = {
+	"holes",
 	"clovers",
 	"rabbits",
 	"foxes"
