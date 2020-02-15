@@ -17,6 +17,8 @@ end
 
 function Rabbit:update(dt, world, newDay)
     if newDay then
+        self.hidden = false
+
         if self.fill == 3 then
             love.event.push("new rabbit", {self.x + 30, self.y})
             self.fill = self.fill - 2
@@ -44,11 +46,16 @@ function Rabbit:update(dt, world, newDay)
     if self.target and lume.distance(self.x, self.y, self.target.x, self.target.y, "squared") < 100 then
         self:eat(food)
     end
+    if self.hide and lume.distance(self.x, self.y, self.shelter.x, self.shelter.y, "squared") < 100 then
+        self.hidden = true
+    end
 end
 
 function Rabbit:draw()
-    love.graphics.setColor(.75, .75, .75)
-    love.graphics.circle("fill", self.x, self.y, 10)
+    if not self.hidden then
+        love.graphics.setColor(.75, .75, .75)
+        love.graphics.circle("fill", self.x, self.y, 10)
+    end
 end
 
 return Rabbit

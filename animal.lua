@@ -25,16 +25,18 @@ function Animal:lookForFood(foodPool)
     self.target = nil
 
     for i, food in ipairs(foodPool) do
-        local distanceSq = lume.distance(
-            self.x, self.y,
-            food.x, food.y,
-            "squared"
-        )
+        if not food.hidden then
+            local distanceSq = lume.distance(
+                self.x, self.y,
+                food.x, food.y,
+                "squared"
+            )
 
-        if not self.target or self.targetDistanceSq > distanceSq then
-            self.target = food
-            self.targetIndex = i
-            self.targetDistanceSq = distanceSq
+            if not self.target or self.targetDistanceSq > distanceSq then
+                self.target = food
+                self.targetIndex = i
+                self.targetDistanceSq = distanceSq
+            end
         end
     end
 end
@@ -56,38 +58,40 @@ function Animal:lookForShelter(shelterPool)
 end
 
 function Animal:watchForSimilar(similarPool)
-        self.similar = nil
+    self.similar = nil
 
-        for i, similar in ipairs(similarPool) do
-            if similar ~= self then
-                local distanceSq = lume.distance(
-                    self.x, self.y,
-                    similar.x, similar.y,
-                    "squared"
-                )
+    for i, similar in ipairs(similarPool) do
+        if similar ~= self and not similar.hidden then
+            local distanceSq = lume.distance(
+                self.x, self.y,
+                similar.x, similar.y,
+                "squared"
+            )
 
-                if not self.similar or self.similarDistanceSq > distanceSq then
-                    self.similar = similar
-                    self.similarDistanceSq = distanceSq
-                end
+            if not self.similar or self.similarDistanceSq > distanceSq then
+                self.similar = similar
+                self.similarDistanceSq = distanceSq
             end
         end
+    end
 end
 
 function Animal:watchForPredators(predatorPool)
     self.predator = nil
 
     for i, predator in ipairs(predatorPool) do
-        local distanceSq = lume.distance(
-            self.x, self.y,
-            predator.x, predator.y,
-            "squared"
-        )
+        if not predator.hidden then
+            local distanceSq = lume.distance(
+                self.x, self.y,
+                predator.x, predator.y,
+                "squared"
+            )
 
-        if not self.predator or self.targetDistanceSq > distanceSq then
-            self.predator = predator
-            self.predatorIndex = i
-            self.targetDistanceSq = distanceSq
+            if not self.predator or self.targetDistanceSq > distanceSq then
+                self.predator = predator
+                self.predatorIndex = i
+                self.targetDistanceSq = distanceSq
+            end
         end
     end
 end
@@ -121,7 +125,7 @@ function Animal:move(dt, maxX, maxY)
 
     local runDirection = 0
     local dx, dy, distance
-
+    self.hide = false
     if similarDistance < self.spacing then
         runDirection = -1
         dx = similarDx
@@ -137,6 +141,7 @@ function Animal:move(dt, maxX, maxY)
         dx = shelterDx
         dy = shelterDy
         distance = shelterDistance
+        self.hide = true
     else
         runDirection = -1
         dx = predatorDx
