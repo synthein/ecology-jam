@@ -79,7 +79,7 @@ function Animal:lookForMate(matingPool)
                 "squared"
             )
 
-            if distanceSq <= visionSq and (not self.mate or self.mateDistanceSq > distanceSq then
+            if distanceSq <= visionSq and (not self.mate or self.mateDistanceSq > distanceSq) then
                 self.mate = similar
                 self.mateDistanceSq = distanceSq
             end
