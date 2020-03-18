@@ -8,6 +8,7 @@ setmetatable(Rabbit, {__index = Animal})
 Rabbit.speed = 50
 Rabbit.spacing = 20
 Rabbit.visionDistance = 200
+Rabbit.minFoodToReproduce = 3
 
 function Rabbit.new(x, y)
     local r = Animal.new(x, y)
@@ -20,9 +21,9 @@ function Rabbit:update(dt, world, newDay)
     if newDay then
         self.hidden = false
 
-        if self.fill == 3 then
+        if self.fill == self.minFoodToReproduce then
             love.event.push("new rabbit", {self.x + 30, self.y})
-            self.fill = self.fill - 2
+            self.fill = self.fill - self.minFoodToReproduce + 1
         end
         self.fill = self.fill - 1
 
