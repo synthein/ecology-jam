@@ -9,10 +9,14 @@ Rabbit.speed = 50
 Rabbit.spacing = 20
 Rabbit.visionDistance = 200
 
-function Rabbit.new(x, y)
-    local r = Animal.new(x, y)
+function Rabbit.new(x, y, gender)
+    local r = Animal.new(x, y, gender)
     setmetatable(r, {__index = Rabbit})
 
+    r.full = 3
+    if r.gender == "male" then
+        r.full = 2
+    end
     return r
 end
 
@@ -20,9 +24,13 @@ function Rabbit:update(dt, world, newDay)
     if newDay then
         self.hidden = false
 
-        if self.fill == 3 then
+        if self.gender == "female" and self.fill == self.full and self.pregnant then
             love.event.push("new rabbit", {self.x + 30, self.y})
+            love.event.push("new rabbit", {self.x - 30, self.y})
+            love.event.push("new rabbit", {self.x, self.y + 30})
+            love.event.push("new rabbit", {self.x, self.y - 30})
             self.fill = self.fill - 2
+            self.pregnant = false
         end
         self.fill = self.fill - 1
 
@@ -34,11 +42,12 @@ function Rabbit:update(dt, world, newDay)
 
     local food = world.creatures.clovers
 
-    if self.fill < 3 then
+    if self.fill < self.full then
         self:lookForFood(food)
     end
 
     self:lookForShelter(world.creatures.holes)
+    self:lookForMate(world.creatures.rabbits)
     self:watchForSimilar(world.creatures.rabbits)
     self:watchForPredators(world.creatures.foxes)
 
@@ -46,6 +55,9 @@ function Rabbit:update(dt, world, newDay)
 
     if self.target and lume.distance(self.x, self.y, self.target.x, self.target.y, "squared") < 100 then
         self:eat(food)
+    end
+    if self.mate and lume.distance(self.x, self.y, self.mate.x, self.mate.y, "squared") < 441 then
+        self:reproduce()
     end
     if self.hide and lume.distance(self.x, self.y, self.shelter.x, self.shelter.y, "squared") < 100 then
         self.hidden = true

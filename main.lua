@@ -23,7 +23,8 @@ function love.load()
 		Clover.seed(i, world.maxX, world.maxY)
 	end
 
-	love.event.push("new rabbit", {400, 300})
+	love.event.push("new rabbit", {410, 300, "male"})
+	love.event.push("new rabbit", {380, 300, "female"})
 
 	table.insert(world.creatures.holes, Hole.new(200, 300))
 end
