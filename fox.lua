@@ -20,9 +20,10 @@ function Fox:update(dt, world, newDay)
     if newDay then
         if self.fill == self.minFoodToReproduce then
             love.event.push("new fox", {self.x + 30, self.y})
-            self.fill = self.fill - self.minFoodToReproduce + 1
+            self.fill = self.fill - self.minFoodToReproduce
+        else
+            self.fill = self.fill - 1
         end
-        self.fill = self.fill - 1
         if self.fill < 0 then
             lume.remove(world.creatures.foxes, self)
             return
