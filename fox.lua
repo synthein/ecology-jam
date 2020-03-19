@@ -1,4 +1,5 @@
 local Animal = require("animal")
+local Timer = require("timer")
 local lume = require("vendor/lume")
 
 local Fox = {}
@@ -10,17 +11,29 @@ Fox.visionDistance = 300
 Fox.minFoodToReproduce = 3
 
 function Fox.new(x, y)
-    local f = Animal.new(x, y)
-    setmetatable(f, {__index = Fox})
+    local self = Animal.new(x, y)
+    setmetatable(self, {__index = Fox})
 
-    f.full = 4
-    if f.gender == "male" then
-        f.full = 2
+    self.full = 4
+    if self.gender == "male" then
+        self.full = 2
     end
-    return f
+
+    self.hunger = Timer.new(10)
+
+    return self
 end
 
 function Fox:update(dt, world, newDay)
+    if self.hunger:ready(dt) then
+        self.fill = self.fill - 1
+
+        if self.fill < 0 then
+            lume.remove(world.creatures.foxes, self)
+            return
+        end
+    end
+
     if newDay then
         self.fill = self.fill - 1
         if self.gender == "female" and self.fill >= self.minFoodToReproduce and self.pregnant then
@@ -29,18 +42,13 @@ function Fox:update(dt, world, newDay)
             love.event.push("new fox", {self.x, self.y + 30})
             love.event.push("new fox", {self.x, self.y - 30})
             self.fill = self.fill - self.minFoodToReproduce
-            self.pregnant = false
-        end
-        if self.fill < 0 then
-            lume.remove(world.creatures.foxes, self)
-            return
         end
     end
 
     local food = world.creatures.rabbits
 
 
-    if self.fill < 4 then
+    if self.fill < self.full then
         self:lookForFood(food)
     end
 

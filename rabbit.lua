@@ -1,5 +1,6 @@
 local Animal = require("animal")
 local Clover = require("clover")
+local Timer = require("timer")
 local lume = require("vendor/lume")
 
 local Rabbit = {}
@@ -11,21 +12,30 @@ Rabbit.visionDistance = 200
 Rabbit.minFoodToReproduce = 2
 
 function Rabbit.new(x, y, gender)
-    local r = Animal.new(x, y, gender)
-    setmetatable(r, {__index = Rabbit})
+    local self = Animal.new(x, y, gender)
+    setmetatable(self, {__index = Rabbit})
 
-    r.full = 3
-    if r.gender == "male" then
-        r.full = 2
+    self.full = 3
+    if self.gender == "male" then
+        self.full = 2
     end
-    return r
+
+    self.hunger = Timer.new(10)
+
+    return self
 end
 
 function Rabbit:update(dt, world, newDay)
-    if newDay then
-        self.hidden = false
+    if self.hunger:ready(dt) then
         self.fill = self.fill - 1
 
+        if self.fill < 0 then
+            lume.remove(world.creatures.rabbits, self)
+            return
+        end
+    end
+
+    if newDay then
         if self.gender == "female" and self.fill >= self.minFoodToReproduce and self.pregnant then
             love.event.push("new rabbit", {self.x + 30, self.y})
             love.event.push("new rabbit", {self.x - 30, self.y})
@@ -33,11 +43,6 @@ function Rabbit:update(dt, world, newDay)
             love.event.push("new rabbit", {self.x, self.y - 30})
             self.fill = self.fill - self.minFoodToReproduce
             self.pregnant = false
-        end
-
-        if self.fill < 0 then
-            lume.remove(world.creatures.rabbits, self)
-            return
         end
     end
 
@@ -62,6 +67,8 @@ function Rabbit:update(dt, world, newDay)
     end
     if self.hide and lume.distance(self.x, self.y, self.shelter.x, self.shelter.y, "squared") < 100 then
         self.hidden = true
+    else
+        self.hidden = false
     end
 end
 

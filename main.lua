@@ -31,13 +31,20 @@ end
 
 local dayTimer = 0
 local dayCount = 0
+local dayLength = 10
 function love.update(dt)
 	dayTimer = dayTimer  + dt
+
 	local newDay = false
-	if dayTimer >= 10 then
+	if dayTimer >= dayLength then
 		newDay = true
 		dayTimer = dayTimer - 10
 		dayCount = dayCount + 1
+
+		Clover.seed(
+			#world.creatures.clovers,
+			world.maxX, world.maxY
+		)
 		if dayCount == 4 then
 			love.event.push("new fox", {350,300})
 			love.event.push("new fox", {450,300})
@@ -48,13 +55,6 @@ function love.update(dt)
 		for i, creature in ipairs(creatures) do
 			creature:update(dt, world, newDay)
 		end
-	end
-
-	if newDay then
-		Clover.seed(
-			#world.creatures.clovers,
-			world.maxX, world.maxY
-		)
 	end
 end
 
