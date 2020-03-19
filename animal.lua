@@ -1,4 +1,5 @@
 local Creature = require("creature")
+local Timer = require("timer")
 local lume = require("vendor/lume")
 
 local Animal = {}
@@ -218,7 +219,7 @@ function Animal:eat(foodPool)
 end
 
 function Animal:reproduce()
-    self.mate.pregnant = true
+    self.mate.pregnant = Timer.new(lume.random(15*0.9, 15*1.1))
     self.fill = self.fill - 1
 end
 

@@ -35,15 +35,13 @@ function Rabbit:update(dt, world, newDay)
         end
     end
 
-    if newDay then
-        if self.gender == "female" and self.fill >= self.minFoodToReproduce and self.pregnant then
-            love.event.push("new rabbit", {self.x + 30, self.y})
-            love.event.push("new rabbit", {self.x - 30, self.y})
-            love.event.push("new rabbit", {self.x, self.y + 30})
-            love.event.push("new rabbit", {self.x, self.y - 30})
-            self.fill = self.fill - self.minFoodToReproduce
-            self.pregnant = false
-        end
+    if self.gender == "female" and self.fill >= self.minFoodToReproduce and self.pregnant and self.pregnant:ready(dt) then
+        love.event.push("new rabbit", {self.x + 30, self.y})
+        love.event.push("new rabbit", {self.x - 30, self.y})
+        love.event.push("new rabbit", {self.x, self.y + 30})
+        love.event.push("new rabbit", {self.x, self.y - 30})
+        self.fill = self.fill - self.minFoodToReproduce
+        self.pregnant = false
     end
 
     local food = world.creatures.clovers
