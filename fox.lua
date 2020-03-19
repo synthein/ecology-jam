@@ -34,15 +34,13 @@ function Fox:update(dt, world, newDay)
         end
     end
 
-    if newDay then
-        self.fill = self.fill - 1
-        if self.gender == "female" and self.fill >= self.minFoodToReproduce and self.pregnant then
-            love.event.push("new fox", {self.x + 30, self.y})
-            love.event.push("new fox", {self.x - 30, self.y})
-            love.event.push("new fox", {self.x, self.y + 30})
-            love.event.push("new fox", {self.x, self.y - 30})
-            self.fill = self.fill - self.minFoodToReproduce
-        end
+    if self.gender == "female" and self.fill >= self.minFoodToReproduce and self.pregnant and self.pregnant:ready(dt) then
+        love.event.push("new fox", {self.x + 30, self.y})
+        love.event.push("new fox", {self.x - 30, self.y})
+        love.event.push("new fox", {self.x, self.y + 30})
+        love.event.push("new fox", {self.x, self.y - 30})
+        self.fill = self.fill - self.minFoodToReproduce
+        self.pregnant = nil
     end
 
     local food = world.creatures.rabbits
