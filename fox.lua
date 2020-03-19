@@ -10,10 +10,10 @@ Fox.visionDistance = 300
 Fox.minFoodToReproduce = 4
 
 function Fox.new(x, y)
-    local f = Animal.new(x, y)
-    setmetatable(f, {__index = Fox})
+    local self = Animal.new(x, y)
+    setmetatable(self, {__index = Fox})
 
-    return f
+    return self
 end
 
 function Fox:update(dt, world, newDay)

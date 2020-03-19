@@ -11,14 +11,14 @@ Rabbit.visionDistance = 200
 Rabbit.minFoodToReproduce = 2
 
 function Rabbit.new(x, y, gender)
-    local r = Animal.new(x, y, gender)
-    setmetatable(r, {__index = Rabbit})
+    local self = Animal.new(x, y, gender)
+    setmetatable(self, {__index = Rabbit})
 
-    r.full = 3
-    if r.gender == "male" then
-        r.full = 2
+    self.full = 3
+    if self.gender == "male" then
+        self.full = 2
     end
-    return r
+    return self
 end
 
 function Rabbit:update(dt, world, newDay)
