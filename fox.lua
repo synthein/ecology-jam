@@ -1,4 +1,5 @@
 local Animal = require("animal")
+local Timer = require("timer")
 local lume = require("vendor/lume")
 
 local Fox = {}
@@ -13,20 +14,25 @@ function Fox.new(x, y)
     local self = Animal.new(x, y)
     setmetatable(self, {__index = Fox})
 
+    self.hunger = Timer.new(10)
+
     return self
 end
 
 function Fox:update(dt, world, newDay)
+    if self.hunger:ready(dt) then
+        self.fill = self.fill - 1
+
+        if self.fill < 0 then
+            lume.remove(world.creatures.foxes, self)
+            return
+        end
+    end
+
     if newDay then
         if self.fill == self.minFoodToReproduce then
             love.event.push("new fox", {self.x + 30, self.y})
             self.fill = self.fill - self.minFoodToReproduce
-        else
-            self.fill = self.fill - 1
-        end
-        if self.fill < 0 then
-            lume.remove(world.creatures.foxes, self)
-            return
         end
     end
 
