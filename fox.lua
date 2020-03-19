@@ -7,6 +7,7 @@ setmetatable(Fox, {__index = Animal})
 Fox.speed = 75
 Fox.spacing = 50
 Fox.visionDistance = 300
+Fox.minFoodToReproduce = 4
 
 function Fox.new(x, y)
     local f = Animal.new(x, y)
@@ -17,11 +18,12 @@ end
 
 function Fox:update(dt, world, newDay)
     if newDay then
-        if self.fill == 4 then
-            self.fill = self.fill - 3
+        if self.fill == self.minFoodToReproduce then
             love.event.push("new fox", {self.x + 30, self.y})
+            self.fill = self.fill - self.minFoodToReproduce
+        else
+            self.fill = self.fill - 1
         end
-        self.fill = self.fill - 1
         if self.fill < 0 then
             lume.remove(world.creatures.foxes, self)
             return
