@@ -1,0 +1,32 @@
+Starting for ecology Jam
+* next steps
+
+Creatures
+    $$$Fox
+    $$$rabbit
+    * new creature
+
+Plants
+    $$$Clover (changed from letice)
+    * new plant
+    
+Environment
+    Holes (For rabits to hide)
+        holds infinite rabits
+        * holds limited number of rabits
+            * rabits can expand hole size.
+    * new environment element
+        * fox den
+        * element for new creature
+        * something for them to go around(hill or a lake)
+
+
+Single Parent breeding
+* two parent breeding
+
+Colored circles for element representation
+* simple sprites
+* complex sprites
+
+Beige Background
+* Once sprites are made grass textured background
