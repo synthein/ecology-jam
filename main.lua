@@ -38,8 +38,9 @@ function love.update(dt)
 		newDay = true
 		dayTimer = dayTimer - 10
 		dayCount = dayCount + 1
-		if dayCount == 3 then
-			love.event.push("new fox", {400,300})
+		if dayCount == 4 then
+			love.event.push("new fox", {350,300})
+			love.event.push("new fox", {450,300})
 		end
 	end
 
