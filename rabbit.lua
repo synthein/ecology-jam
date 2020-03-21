@@ -67,7 +67,7 @@ function Rabbit:update(dt, world, newDay)
     if self.mate and lume.distance(self.x, self.y, self.mate.x, self.mate.y, "squared") < 441 then
         self:reproduce()
     end
-    if self.hide and lume.distance(self.x, self.y, self.shelter.x, self.shelter.y, "squared") < 100 then
+    if self.hide and self.shelter and lume.distance(self.x, self.y, self.shelter.x, self.shelter.y, "squared") < 100 then
         self.hidden = true
     else
         self.hidden = false

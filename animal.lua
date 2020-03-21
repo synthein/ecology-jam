@@ -182,6 +182,7 @@ function Animal:move(dt, maxX, maxY)
     local survival
     if self.fill >= self.full then
         survival = self.netShelter
+        self.hide = true
     else
         survival = self.netTarget
     end
