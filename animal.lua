@@ -8,32 +8,32 @@ setmetatable(Animal, {__index = Creature})
 Animal.visionDistance = math.huge
 
 function Animal.new(x, y, gender)
-    local a = Creature.new(x, y)
-    setmetatable(a, {__index = Animal})
+    local self = Creature.new(x, y)
+    setmetatable(self, {__index = Animal})
 
-    a.target = nil
-    a.targetIndex = nil
-    a.targetDistanceSq = nil
+    self.target = nil
+    self.targetIndex = nil
+    self.targetDistanceSq = nil
 
-    a.predator = nil
-    a.targetIndex = nil
-    a.targetDistanceSq = nil
+    self.predator = nil
+    self.targetIndex = nil
+    self.targetDistanceSq = nil
 
-    a.fill = 0
+    self.fill = 0
 
     if gender then
-        a.gender = gender
+        self.gender = gender
     else
-        a.gender = "female"
+        self.gender = "female"
         if math.random() >= .5 then
-            a.gender = "male"
+            self.gender = "male"
         end
     end
-    if a.gender == female then
-        a.pregnant = false
+    if self.gender == female then
+        self.pregnant = false
     end
 
-    return a
+    return self
 end
 
 function Animal:lookForFood(foodPool)

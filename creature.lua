@@ -1,12 +1,12 @@
 local Creature = {}
 
 function Creature.new(x, y)
-    local c = setmetatable({}, {__index = Creature})
+    local self = setmetatable({}, {__index = Creature})
 
-    c.x = x
-    c.y = y
+    self.x = x
+    self.y = y
 
-    return c
+    return self
 end
 
 function Creature:update()
