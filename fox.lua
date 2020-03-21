@@ -9,8 +9,8 @@ Fox.speed = 75
 Fox.spacing = 30
 Fox.visionDistance = 300
 
-function Fox.new(x, y)
-    local self = Animal.new(x, y)
+function Fox.new(x, y, gender)
+    local self = Animal.new(x, y, gender)
     setmetatable(self, {__index = Fox})
 
     self.full = 4

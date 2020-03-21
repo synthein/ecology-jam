@@ -46,8 +46,8 @@ function love.update(dt)
 			world.maxX, world.maxY
 		)
 		if dayCount == 6 then
-			love.event.push("new fox", {350,300})
-			love.event.push("new fox", {450,300})
+			love.event.push("new fox", {350,300, "male"})
+			love.event.push("new fox", {450,300, "female"})
 		end
 	end
 
