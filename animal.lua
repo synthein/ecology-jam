@@ -210,8 +210,14 @@ function Animal:move(dt, maxX, maxY)
     local dx, dy, distance
     self.hide = false
 
-    dx = self.netTarget[1] + self.netShelter[1] + self.netMate[1] + self.netSimilar[1] + self.netPredator[1]
-    dy = self.netTarget[2] + self.netShelter[2] + self.netMate[2] + self.netSimilar[2] + self.netPredator[2]
+    local survival
+    if self.fill >= self.full then
+        survival = self.netShelter
+    else
+        survival = self.netTarget
+    end
+    dx = survival[1] + self.netMate[1] + self.netSimilar[1] + self.netPredator[1]
+    dy = survival[2] + self.netMate[2] + self.netSimilar[2] + self.netPredator[2]
 
     distance = math.sqrt(dx * dx + dy * dy)
     runDirection = 1
