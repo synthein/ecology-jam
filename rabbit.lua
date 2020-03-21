@@ -9,7 +9,6 @@ setmetatable(Rabbit, {__index = Animal})
 Rabbit.speed = 50
 Rabbit.spacing = 20
 Rabbit.visionDistance = 200
-Rabbit.minFoodToReproduce = 2
 
 function Rabbit.new(x, y, gender)
     local self = Animal.new(x, y, gender)
@@ -27,7 +26,11 @@ end
 
 function Rabbit:update(dt, world, newDay)
     if self.hunger:ready(dt) then
-        self.fill = self.fill - 1
+        if self.pregnant then
+            self.fill = self.fill - 2
+        else
+            self.fill = self.fill - 1
+        end
 
         if self.fill < 0 then
             lume.remove(world.creatures.rabbits, self)
@@ -35,12 +38,11 @@ function Rabbit:update(dt, world, newDay)
         end
     end
 
-    if self.gender == "female" and self.fill >= self.minFoodToReproduce and self.pregnant and self.pregnant:ready(dt) then
+    if self.pregnant and self.pregnant:ready(dt) then
         love.event.push("new rabbit", {self.x + 30, self.y})
         love.event.push("new rabbit", {self.x - 30, self.y})
         love.event.push("new rabbit", {self.x, self.y + 30})
         love.event.push("new rabbit", {self.x, self.y - 30})
-        self.fill = self.fill - self.minFoodToReproduce
         self.pregnant = false
     end
 

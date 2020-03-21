@@ -8,7 +8,6 @@ setmetatable(Fox, {__index = Animal})
 Fox.speed = 75
 Fox.spacing = 30
 Fox.visionDistance = 300
-Fox.minFoodToReproduce = 3
 
 function Fox.new(x, y)
     local self = Animal.new(x, y)
@@ -26,7 +25,11 @@ end
 
 function Fox:update(dt, world, newDay)
     if self.hunger:ready(dt) then
-        self.fill = self.fill - 1
+        if self.pregnant then
+            self.fill = self.fill - 2
+        else
+            self.fill = self.fill - 1
+        end
 
         if self.fill < 0 then
             lume.remove(world.creatures.foxes, self)
@@ -34,12 +37,11 @@ function Fox:update(dt, world, newDay)
         end
     end
 
-    if self.gender == "female" and self.fill >= self.minFoodToReproduce and self.pregnant and self.pregnant:ready(dt) then
+    if self.pregnant and self.pregnant:ready(dt) then
         love.event.push("new fox", {self.x + 30, self.y})
         love.event.push("new fox", {self.x - 30, self.y})
         love.event.push("new fox", {self.x, self.y + 30})
         love.event.push("new fox", {self.x, self.y - 30})
-        self.fill = self.fill - self.minFoodToReproduce
         self.pregnant = nil
     end
 
