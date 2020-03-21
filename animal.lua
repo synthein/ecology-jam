@@ -174,37 +174,6 @@ function Animal:watchForPredators(predatorPool)
 end
 
 function Animal:move(dt, maxX, maxY)
-    local targetDx, targetDy, targetDistance = 0, 0, math.huge
-    local shelterDx, shelterDy, shelterDistance = 0, 0, math.huge
-    local mateDx, mateDy, mateDistance = 0, 0, math.huge
-    local similarDx, similarDy, similarDistance = 0, 0, math.huge
-    local predatorDx, predatorDy, predatorDistance = 0, 0, math.huge
-
-    if self.target then
-        targetDx = self.target.x - self.x
-        targetDy = self.target.y - self.y
-        targetDistance = math.sqrt(targetDx * targetDx + targetDy * targetDy)
-    end
-    if self.shelter then
-        shelterDx = self.shelter.x - self.x
-        shelterDy = self.shelter.y - self.y
-        shelterDistance = math.sqrt(shelterDx * shelterDx + shelterDy * shelterDy)
-    end
-    if self.mate then
-        mateDx = self.mate.x - self.x
-        mateDy = self.mate.y - self.y
-        mateDistance = math.sqrt(mateDx * mateDx + mateDy * mateDy)
-    end
-    if self.similar then
-        similarDx = self.similar.x - self.x
-        similarDy = self.similar.y - self.y
-        similarDistance = math.sqrt(similarDx * similarDx + similarDy * similarDy)
-    end
-    if self.predator then
-        predatorDx = self.predator.x - self.x
-        predatorDy = self.predator.y - self.y
-        predatorDistance = math.sqrt(predatorDx * predatorDx + predatorDy * predatorDy)
-    end
 
     local runDirection = 0
     local dx, dy, distance
@@ -220,40 +189,10 @@ function Animal:move(dt, maxX, maxY)
     dy = survival[2] + self.netMate[2] + self.netSimilar[2] + self.netPredator[2]
 
     distance = math.sqrt(dx * dx + dy * dy)
-    runDirection = 1
-    --[[
-    if similarDistance < self.spacing then
-        runDirection = -1
-        dx = similarDx
-        dy = similarDy
-        distance = similarDistance
-    elseif targetDistance < predatorDistance then
-        runDirection = 1
-        dx = targetDx
-        dy = targetDy
-        distance = targetDistance
-    elseif mateDistance < predatorDistance then
-        runDirection = 1
-        dx = mateDx
-        dy = mateDy
-        distance = mateDistance
-    elseif shelterDistance < predatorDistance then
-        runDirection = 1
-        dx = shelterDx
-        dy = shelterDy
-        distance = shelterDistance
-        self.hide = true
-    else
-        runDirection = -1
-        dx = predatorDx
-        dy = predatorDy
-        distance = predatorDistance
-    end
-    --]]
 
     if distance ~= 0 then
-        self.x = self.x + runDirection * dt * self.speed * dx / distance
-        self.y = self.y + runDirection * dt * self.speed * dy / distance
+        self.x = self.x + dt * self.speed * dx / distance
+        self.y = self.y + dt * self.speed * dy / distance
 
         self.x = lume.clamp(self.x, 0, maxX)
         self.y = lume.clamp(self.y, 0, maxY)
