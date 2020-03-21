@@ -50,6 +50,8 @@ function Rabbit:update(dt, world, newDay)
 
     if self.fill < self.full then
         self:lookForFood(food)
+    else
+        self.netTarget = {0, 0}
     end
 
     self:lookForShelter(world.creatures.holes)
