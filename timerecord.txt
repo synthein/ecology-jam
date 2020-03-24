@@ -7,7 +7,7 @@ Time Spent:
 2
 3.75
 2.5
-
+3.25
 
 Time left:
-10.25
+7
