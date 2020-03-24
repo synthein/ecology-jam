@@ -25,6 +25,9 @@ function Animal.new(x, y, gender)
     self.netMate = {0, 0}
     self.netShelter = {0, 0}
 
+    self.randomDAngle = 0
+    self.angle = 0
+
     self.fill = 0
 
     if gender then
@@ -186,8 +189,12 @@ function Animal:move(dt, maxX, maxY)
     else
         survival = self.netTarget
     end
-    dx = survival[1] + self.netMate[1] + self.netSimilar[1] + self.netPredator[1]
-    dy = survival[2] + self.netMate[2] + self.netSimilar[2] + self.netPredator[2]
+
+    self.randomDAngle = self.randomDAngle * (1 - dt) + dt * math.random(-25, 25)
+    self.angle = self.angle + dt * self.randomDAngle
+
+    dx = survival[1] + self.netMate[1] + self.netSimilar[1] + self.netPredator[1] + math.cos(self.angle)/1000
+    dy = survival[2] + self.netMate[2] + self.netSimilar[2] + self.netPredator[2] + math.sin(self.angle)/1000
 
     distance = math.sqrt(dx * dx + dy * dy)
 
@@ -197,7 +204,16 @@ function Animal:move(dt, maxX, maxY)
 
         self.x = lume.clamp(self.x, 0, maxX)
         self.y = lume.clamp(self.y, 0, maxY)
+
+        if self.x == 0 or self.x == maxX then
+            dx = -dx
+        end
+        if self.y == 0 or self.y == maxY then
+            dy = -dy
+        end
+        self.angle = math.atan2(dy, dx)
     end
+
 end
 
 function Animal:eat(foodPool)
