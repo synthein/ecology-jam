@@ -35,8 +35,6 @@ function Clover.seed(cloverPool, maxX, maxY)
     --newClovers = - cloverCount * cloverCount / 100 + cloverCount
     existingCloverCount = #cloverPool
     newClovers = math.ceil(existingCloverCount * (1 - existingCloverCount / 100))
-    print("There are " .. existingCloverCount .. " clovers")
-    print("Spawning " .. newClovers .. " new clovers")
     for i = 1, newClovers do
         local parent = lume.randomchoice(cloverPool)
         local distance = exponentialRandom() * 50
