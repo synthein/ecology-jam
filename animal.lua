@@ -42,6 +42,13 @@ function Animal.new(x, y, gender)
         self.pregnant = false
     end
 
+    self.full = 4
+    if self.gender == "male" then
+        self.full = 2
+    end
+
+    self.hunger = Timer.new(10)
+
     return self
 end
 

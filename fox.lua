@@ -16,13 +16,6 @@ function Fox.new(x, y, gender)
     local self = Animal.new(x, y, gender)
     setmetatable(self, {__index = Fox})
 
-    self.full = 4
-    if self.gender == "male" then
-        self.full = 2
-    end
-
-    self.hunger = Timer.new(10)
-
     return self
 end
 
