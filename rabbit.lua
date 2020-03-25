@@ -10,6 +10,8 @@ Rabbit.speed = 50
 Rabbit.spacing = 20
 Rabbit.visionDistance = 200
 Rabbit.gestationPeriod = 20
+Rabbit.color = {.75, .75, .75}
+Rabbit.size = 10
 
 function Rabbit.new(x, y, gender)
     local self = Animal.new(x, y, gender)
@@ -77,15 +79,7 @@ end
 
 function Rabbit:draw()
     if not self.hidden then
-        love.graphics.setColor(.75, .75, .75)
-        love.graphics.circle("fill", self.x, self.y, 10)
-        love.graphics.setColor(0, 0, 0)
-        -- text, x, y, r, sx, sy, ox, oy, kx, ky
-        if self.gender == "male" then
-            love.graphics.print("M", self.x, self.y, 0, 1, 1, 5, 7 )
-        else
-            love.graphics.print("F", self.x, self.y, 0, 1, 1, 5, 7 )
-        end
+        Animal.draw(self)
     end
 end
 

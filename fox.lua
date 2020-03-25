@@ -8,7 +8,9 @@ setmetatable(Fox, {__index = Animal})
 Fox.speed = 100
 Fox.spacing = 30
 Fox.visionDistance = 300
-Fox.gestationPeriod= 15
+Fox.gestationPeriod = 15
+Fox.color = {1, .5, 0}
+Fox.size = 15
 
 function Fox.new(x, y, gender)
     local self = Animal.new(x, y, gender)
@@ -62,18 +64,6 @@ function Fox:update(dt, world, newDay)
     end
     if self.mate and lume.distance(self.x, self.y, self.mate.x, self.mate.y, "squared") < 961 then
         self:reproduce()
-    end
-end
-
-function Fox:draw()
-    love.graphics.setColor(1, .5, 0)
-    love.graphics.circle("fill", self.x, self.y, 15)
-    love.graphics.setColor(0, 0, 0)
-    -- text, x, y, r, sx, sy, ox, oy, kx, ky
-    if self.gender == "male" then
-        love.graphics.print("M", self.x, self.y, 0, 1, 1, 5, 7 )
-    else
-        love.graphics.print("F", self.x, self.y, 0, 1, 1, 5, 7 )
     end
 end
 

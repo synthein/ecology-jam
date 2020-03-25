@@ -13,6 +13,8 @@ function Creature:update()
 end
 
 function Creature:draw()
+    love.graphics.setColor(self.color)
+    love.graphics.circle("fill", self.x, self.y, self.size)
 end
 
 return Creature

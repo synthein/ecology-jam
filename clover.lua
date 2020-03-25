@@ -4,16 +4,14 @@ local lume = require("vendor/lume")
 local Clover = {}
 setmetatable(Clover, {__index = Creature})
 
+Clover.color = {0, 0.8, 0}
+Clover.size = 5
+
 function Clover.new(x, y)
     local c = Creature.new(x, y)
     setmetatable(c, {__index = Clover})
 
     return c
-end
-
-function Clover:draw()
-    love.graphics.setColor(0, 0.8, 0)
-    love.graphics.circle("fill", self.x, self.y, 5)
 end
 
 -- exponentialRandom is a random function with an exponential distribution.

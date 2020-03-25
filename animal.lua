@@ -231,4 +231,14 @@ function Animal:reproduce()
     self.fill = self.fill - 1
 end
 
+function Animal:draw()
+    Creature.draw(self)
+    love.graphics.setColor(0, 0, 0)
+    if self.gender == "male" then
+        love.graphics.print("M", self.x, self.y, 0, 1, 1, 5, 7 )
+    else
+        love.graphics.print("F", self.x, self.y, 0, 1, 1, 5, 7 )
+    end
+end
+
 return Animal
