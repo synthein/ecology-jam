@@ -40,9 +40,7 @@ local dayLength = 10
 function love.update(dt)
 	dayTimer = dayTimer  + dt
 
-	local newDay = false
 	if dayTimer >= dayLength then
-		newDay = true
 		dayTimer = dayTimer - 10
 		dayCount = dayCount + 1
 
@@ -58,7 +56,7 @@ function love.update(dt)
 
 	for creatureType, creatures in pairs(world.creatures) do
 		for i, creature in ipairs(creatures) do
-			creature:update(dt, world, newDay)
+			creature:update(dt, world)
 		end
 	end
 end

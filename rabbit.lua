@@ -20,7 +20,7 @@ function Rabbit.new(x, y, gender)
     return self
 end
 
-function Rabbit:update(dt, world, newDay)
+function Rabbit:update(dt, world)
     if self.hunger:ready(dt) then
         if self.pregnant then
             self.fill = self.fill - 2

@@ -19,7 +19,7 @@ function Fox.new(x, y, gender)
     return self
 end
 
-function Fox:update(dt, world, newDay)
+function Fox:update(dt, world)
     if self.hunger:ready(dt) then
         if self.pregnant then
             self.fill = self.fill - 2
