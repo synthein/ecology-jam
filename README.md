@@ -22,4 +22,4 @@ An ecology simulation game made in 24 hours (with breaks).
 ![](screenshots/17-hours.png)
 
 ## 18 hours
-![](screenshots/18-hours.png)
+![](screenshots/18-hours.gif)
