@@ -9,7 +9,7 @@ setmetatable(Rabbit, {__index = Animal})
 Rabbit.speed = 50
 Rabbit.spacing = 20
 Rabbit.visionDistance = 200
-Rabbit.gestationPeriod = 20
+Rabbit.gestationPeriod = 40
 Rabbit.color = {.75, .75, .75}
 Rabbit.size = 10
 

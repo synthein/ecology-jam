@@ -23,13 +23,16 @@ function love.load()
 	local x = world.maxX / 2
 	local y = world.maxY / 2
 
-	table.insert(world.creatures.clovers, Clover.new(x, y))
-	for i = 1, math.floor((x+y)/80) do
+	--table.insert(world.creatures.clovers, Clover.new(x, y))
+	table.insert(world.creatures.clovers, Clover.new(300, 200))
+	for i = 1, 15 do
 		Clover.seed(world.creatures.clovers, world.maxX, world.maxY)
 	end
 
-	love.event.push("new rabbit", {x + 10, y, "male"})
-	love.event.push("new rabbit", {x - 10, y, "female"})
+	--love.event.push("new rabbit", {x + 10, y, "male"})
+	--love.event.push("new rabbit", {x - 10, y, "female"})
+	love.event.push("new rabbit", {0, 20, "male"})
+	love.event.push("new rabbit", {20, 0, "female"})
 
 	table.insert(world.creatures.holes, Hole.new(200, 300))
 end
@@ -48,9 +51,11 @@ function love.update(dt)
 			world.creatures.clovers,
 			world.maxX, world.maxY
 		)
-		if dayCount == 8 then
-			love.event.push("new fox", {world.maxX / 2 - 15, world.maxY / 2, "male"})
-			love.event.push("new fox", {world.maxX / 2 + 15, world.maxY / 2, "female"})
+		if dayCount == 13 then
+			--love.event.push("new fox", {world.maxX / 2 - 15, world.maxY / 2, "male"})
+			--love.event.push("new fox", {world.maxX / 2 + 15, world.maxY / 2, "female"})
+			love.event.push("new fox", {0, 30, "male"})
+			love.event.push("new fox", {30, 0, "female"})
 		end
 	end
 

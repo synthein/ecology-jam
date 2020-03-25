@@ -8,7 +8,7 @@ setmetatable(Fox, {__index = Animal})
 Fox.speed = 100
 Fox.spacing = 30
 Fox.visionDistance = 300
-Fox.gestationPeriod = 15
+Fox.gestationPeriod = 60
 Fox.color = {1, .5, 0}
 Fox.size = 15
 
