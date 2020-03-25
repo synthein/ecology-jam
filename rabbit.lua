@@ -9,6 +9,7 @@ setmetatable(Rabbit, {__index = Animal})
 Rabbit.speed = 50
 Rabbit.spacing = 20
 Rabbit.visionDistance = 200
+Rabbit.gestationPeriod = 20
 
 function Rabbit.new(x, y, gender)
     local self = Animal.new(x, y, gender)

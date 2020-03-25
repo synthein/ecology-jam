@@ -5,9 +5,10 @@ local lume = require("vendor/lume")
 local Fox = {}
 setmetatable(Fox, {__index = Animal})
 
-Fox.speed = 75
+Fox.speed = 100
 Fox.spacing = 30
 Fox.visionDistance = 300
+Fox.gestationPeriod= 15
 
 function Fox.new(x, y, gender)
     local self = Animal.new(x, y, gender)
@@ -40,8 +41,6 @@ function Fox:update(dt, world, newDay)
     if self.pregnant and self.pregnant:ready(dt) then
         love.event.push("new fox", {self.x + 30, self.y})
         love.event.push("new fox", {self.x - 30, self.y})
-        love.event.push("new fox", {self.x, self.y + 30})
-        love.event.push("new fox", {self.x, self.y - 30})
         self.pregnant = nil
     end
 

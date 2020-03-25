@@ -34,10 +34,11 @@ function Clover.seed(cloverPool, maxX, maxY)
     --x*1(1-x/100) -> -x^2/100 + x
     --newClovers = - cloverCount * cloverCount / 100 + cloverCount
     existingCloverCount = #cloverPool
-    newClovers = math.ceil(existingCloverCount * (1 - existingCloverCount / 100))
+
+    newClovers = math.ceil(existingCloverCount * (1 - existingCloverCount * 8 / (maxX + maxY)))
     for i = 1, newClovers do
         local parent = lume.randomchoice(cloverPool)
-        local distance = exponentialRandom() * 50
+        local distance = exponentialRandom() * 100
         local direction = math.random(0, 2*math.pi)
         local x, y = lume.vector(direction, distance)
         x = x + parent.x

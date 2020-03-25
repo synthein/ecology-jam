@@ -16,15 +16,20 @@ local world = {
 }
 
 function love.load()
+	love.window.setFullscreen(true)
+	world.maxX = love.graphics.getWidth()
+	world.maxY = love.graphics.getHeight()
 	love.graphics.setBackgroundColor(0.78, 0.68, 0.60)
+	local x = world.maxX / 2
+	local y = world.maxY / 2
 
-	table.insert(world.creatures.clovers, Clover.new(400, 300))
-	for i = 1, 10 do
+	table.insert(world.creatures.clovers, Clover.new(x, y))
+	for i = 1, math.floor((x+y)/80) do
 		Clover.seed(world.creatures.clovers, world.maxX, world.maxY)
 	end
 
-	love.event.push("new rabbit", {410, 300, "male"})
-	love.event.push("new rabbit", {380, 300, "female"})
+	love.event.push("new rabbit", {x + 10, y, "male"})
+	love.event.push("new rabbit", {x - 10, y, "female"})
 
 	table.insert(world.creatures.holes, Hole.new(200, 300))
 end
@@ -45,9 +50,9 @@ function love.update(dt)
 			world.creatures.clovers,
 			world.maxX, world.maxY
 		)
-		if dayCount == 6 then
-			love.event.push("new fox", {350,300, "male"})
-			love.event.push("new fox", {450,300, "female"})
+		if dayCount == 8 then
+			love.event.push("new fox", {world.maxX / 2 - 15, world.maxY / 2, "male"})
+			love.event.push("new fox", {world.maxX / 2 + 15, world.maxY / 2, "female"})
 		end
 	end
 

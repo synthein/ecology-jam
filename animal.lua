@@ -226,7 +226,8 @@ function Animal:eat(foodPool)
 end
 
 function Animal:reproduce()
-    self.mate.pregnant = Timer.new(lume.random(15*0.9, 15*1.1))
+    local m = self.mate.gestationPeriod
+    self.mate.pregnant = Timer.new(lume.random(m*0.9, m*1.1))
     self.fill = self.fill - 1
 end
 
