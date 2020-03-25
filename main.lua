@@ -18,9 +18,9 @@ local world = {
 function love.load()
 	love.graphics.setBackgroundColor(0.78, 0.68, 0.60)
 
-	love.event.push("new clover", {400, 300})
+	table.insert(world.creatures.clovers, Clover.new(400, 300))
 	for i = 1, 10 do
-		Clover.seed(i, world.maxX, world.maxY)
+		Clover.seed(world.creatures.clovers, world.maxX, world.maxY)
 	end
 
 	love.event.push("new rabbit", {410, 300, "male"})
@@ -42,7 +42,7 @@ function love.update(dt)
 		dayCount = dayCount + 1
 
 		Clover.seed(
-			#world.creatures.clovers,
+			world.creatures.clovers,
 			world.maxX, world.maxY
 		)
 		if dayCount == 6 then
