@@ -36,12 +36,19 @@ function Clover.seed(cloverPool, maxX, maxY)
     newClovers = math.ceil(existingCloverCount * (1 - existingCloverCount * 4 / (maxX + maxY)))
     for i = 1, newClovers do
         local parent = lume.randomchoice(cloverPool)
-        local distance = exponentialRandom() * 150
-        local direction = math.random(0, 2*math.pi)
-        local x, y = lume.vector(direction, distance)
-        x = x + parent.x
-        y = y + parent.y
-        table.insert(cloverPool, Clover.new(lume.clamp(x, 0, maxX), lume.clamp(y, 0, maxY)))
+
+        local distance, direction
+        local x, y = -1, -1
+
+        while x < 0 or x > maxX or y < 0 or y > maxY do
+            distance = exponentialRandom() * 150
+            direction = math.random(0, 2*math.pi)
+            x, y = lume.vector(direction, distance)
+            x = x + parent.x
+            y = y + parent.y
+        end
+
+        table.insert(cloverPool, Clover.new(x, y))
     end
 end
 
