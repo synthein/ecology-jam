@@ -35,6 +35,9 @@ function love.load()
 	love.event.push("new rabbit", {20, 0, "female"})
 
 	table.insert(world.creatures.holes, Hole.new(200, 300))
+	table.insert(world.creatures.holes, Hole.new(world.maxX - 150, 50))
+	table.insert(world.creatures.holes, Hole.new(100, world.maxY - 100))
+	table.insert(world.creatures.holes, Hole.new(world.maxX -200, world.maxY - 200))
 end
 
 local dayTimer = 0
