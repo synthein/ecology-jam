@@ -109,20 +109,26 @@ function Animal:lookForMate(matingPool)
     local netMate = {0, 0}
 
     for i, mate in ipairs(matingPool) do
-        if self.gender == "male" and mate.gender == "female" and not mate.pregnant and mate.fill == mate.full and not mate.hidden then
+        if self.gender == "male" and mate.gender == "female" then
             local distanceSq = lume.distance(
                 self.x, self.y,
                 mate.x, mate.y,
                 "squared"
             )
 
-            if distanceSq <= visionSq and (not self.mate or self.mateDistanceSq > distanceSq) then
+            local ready =  not mate.pregnant and mate.fill == mate.full
+            local dx = mate.x - self.x
+            local dy = mate.y - self.y
+            local m = 1
+            if not ready then
+                m = 1/4
+            end
+            netMate[1] = netMate[1] + m*dx/distanceSq
+            netMate[2] = netMate[2] + m*dy/distanceSq
+
+            if distanceSq <= visionSq and ready and (not self.mate or self.mateDistanceSq > distanceSq) then
                 self.mate = mate
                 self.mateDistanceSq = distanceSq
-                local dx = mate.x - self.x
-                local dy = mate.y - self.y
-                netMate[1] = netMate[1] + dx/distanceSq
-                netMate[2] = netMate[2] + dy/distanceSq
             end
         end
     end
