@@ -65,14 +65,17 @@ function Animal:lookForFood(foodPool)
                 "squared"
             )
 
-            if distanceSq <= visionSq and (not self.target or self.targetDistanceSq > distanceSq) then
-                self.target = food
-                self.targetIndex = i
-                self.targetDistanceSq = distanceSq
+            if distanceSq <= visionSq then
                 local dx = food.x - self.x
                 local dy = food.y - self.y
                 netTarget[1] = netTarget[1] + dx/distanceSq
                 netTarget[2] = netTarget[2] + dy/distanceSq
+
+                if (not self.target or self.targetDistanceSq > distanceSq) then
+                    self.target = food
+                    self.targetIndex = i
+                    self.targetDistanceSq = distanceSq
+                end
             end
         end
     end
@@ -91,13 +94,16 @@ function Animal:lookForShelter(shelterPool)
             "squared"
         )
 
-        if distanceSq <= visionSq and (not self.shelter or self.shelterDistanceSq > distanceSq) then
-            self.shelter = shelter
-            self.shelterDistanceSq = distanceSq
+        if distanceSq <= visionSq then
             local dx = shelter.x - self.x
             local dy = shelter.y - self.y
             netShelter[1] = netShelter[1] + dx/distanceSq
             netShelter[2] = netShelter[2] + dy/distanceSq
+
+            if (not self.shelter or self.shelterDistanceSq > distanceSq) then
+                self.shelter = shelter
+                self.shelterDistanceSq = distanceSq
+            end
         end
     end
     self.netShelter = netShelter
@@ -116,19 +122,24 @@ function Animal:lookForMate(matingPool)
                 "squared"
             )
 
-            local ready =  not mate.pregnant and mate.fill == mate.full
-            local dx = mate.x - self.x
-            local dy = mate.y - self.y
-            local m = 1
-            if not ready then
-                m = 1/4
-            end
-            netMate[1] = netMate[1] + m*dx/distanceSq
-            netMate[2] = netMate[2] + m*dy/distanceSq
+            if distanceSq <= visionSq then
+                local ready =  not mate.pregnant and mate.fill == mate.full
+                local dx = mate.x - self.x
+                local dy = mate.y - self.y
+                local m = 1
+                if not ready then
+                    m = 1/4
+                end
 
-            if distanceSq <= visionSq and ready and (not self.mate or self.mateDistanceSq > distanceSq) then
-                self.mate = mate
-                self.mateDistanceSq = distanceSq
+                if ready or distanceSq > self.size*self.size*16 then
+                    netMate[1] = netMate[1] + m*dx/distanceSq
+                    netMate[2] = netMate[2] + m*dy/distanceSq
+                end
+
+                if ready and (not self.mate or self.mateDistanceSq > distanceSq) then
+                    self.mate = mate
+                    self.mateDistanceSq = distanceSq
+                end
             end
         end
     end
@@ -149,13 +160,16 @@ function Animal:watchForSimilar(similarPool)
             )
 
             local spacingSq = self.spacing * self.spacing
-            if distanceSq <= spacingSq and (not self.similar or self.similarDistanceSq > distanceSq) then
-                self.similar = similar
-                self.similarDistanceSq = distanceSq
+            if distanceSq <= spacingSq then
                 local dx = self.x - similar.x
                 local dy = self.y - similar.y
                 netSimilar[1] = netSimilar[1] + dx/distanceSq
                 netSimilar[2] = netSimilar[2] + dy/distanceSq
+
+                if (not self.similar or self.similarDistanceSq > distanceSq) then
+                    self.similar = similar
+                    self.similarDistanceSq = distanceSq
+                end
             end
         end
     end
@@ -175,14 +189,17 @@ function Animal:watchForPredators(predatorPool)
                 "squared"
             )
 
-            if distanceSq <= visionSq and (not self.predator or self.targetDistanceSq > distanceSq) then
-                self.predator = predator
-                self.predatorIndex = i
-                self.targetDistanceSq = distanceSq
+            if distanceSq <= visionSq then
                 local dx = self.x - predator.x
                 local dy = self.y - predator.y
                 netPredator[1] = netPredator[1] + dx/distanceSq
                 netPredator[2] = netPredator[2] + dy/distanceSq
+
+                if (not self.predator or self.targetDistanceSq > distanceSq) then
+                    self.predator = predator
+                    self.predatorIndex = i
+                    self.targetDistanceSq = distanceSq
+                end
             end
         end
     end
